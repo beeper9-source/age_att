@@ -109,6 +109,35 @@ async function loadAttendance() {
     }
 }
 
+// Google Calendar에 일정 추가
+function addToGoogleCalendar(scheduleDate, memberName) {
+    // 날짜 문자열을 파싱 (YYYY-MM-DD 형식)
+    const [year, month, day] = scheduleDate.split('-').map(Number);
+    
+    // 오후 4시부터 6시까지 (한국 시간 기준, UTC+9)
+    // Google Calendar 링크 형식: YYYYMMDDTHHmmss+0900 (한국 시간대 명시)
+    const formatDate = (hours) => {
+        const y = String(year);
+        const m = String(month).padStart(2, '0');
+        const d = String(day).padStart(2, '0');
+        const h = String(hours).padStart(2, '0');
+        return `${y}${m}${d}T${h}0000+0900`; // 한국 시간대(UTC+9) 명시
+    };
+    
+    const start = formatDate(16); // 오후 4시
+    const end = formatDate(18);   // 오후 6시
+    
+    // Google Calendar 링크 생성
+    const title = encodeURIComponent(`알기앙 연습 - ${memberName}`);
+    const details = encodeURIComponent('클래식기타 앙상블 연습');
+    const location = encodeURIComponent('알기앙 연습장');
+    
+    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
+    
+    // 새 창에서 Google Calendar 열기
+    window.open(calendarUrl, '_blank');
+}
+
 // 출석 상태 업데이트
 async function updateAttendance(memberId, status) {
     if (!currentScheduleId) return;
@@ -119,6 +148,7 @@ async function updateAttendance(memberId, status) {
     try {
         // 기존 기록 확인
         const existing = attendanceRecords.find(r => r.member_id === memberId);
+        const previousStatus = existing ? existing.status : null;
 
         if (existing) {
             // 업데이트
@@ -139,6 +169,20 @@ async function updateAttendance(memberId, status) {
                 }]);
 
             if (error) throw error;
+        }
+
+        // 출석 상태로 변경되었고, 이전 상태가 출석이 아닐 때만 Google Calendar에 추가
+        if (status === '출석' && previousStatus !== '출석') {
+            // 연습일 정보 가져오기
+            const schedule = schedules.find(s => s.id === currentScheduleId);
+            if (schedule) {
+                // 단원 정보 가져오기
+                const member = members.find(m => m.id === memberId);
+                if (member) {
+                    // Google Calendar에 일정 추가
+                    addToGoogleCalendar(schedule.practice_date, member.name);
+                }
+            }
         }
 
         await loadAttendance();
