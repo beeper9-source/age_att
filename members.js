@@ -107,6 +107,20 @@ async function saveMember() {
 async function deleteMember(id) {
     if (!confirm('정말 이 단원을 삭제하시겠습니까?')) return;
 
+    // 비밀번호 확인
+    const password = prompt('거북코사번을 입력하세요:');
+    
+    // 취소를 누르면 null이 반환됨
+    if (password === null) {
+        return; // 사용자가 취소를 눌렀으므로 그냥 종료
+    }
+    
+    // 비밀번호가 일치하지 않으면 삭제 취소
+    if (password !== '22331') {
+        alert('비밀번호가 일치하지 않습니다. 삭제가 취소되었습니다.');
+        return;
+    }
+
     const supabase = getSupabase();
     if (!supabase) return;
 
