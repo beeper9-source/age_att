@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단원 관리 - Reina</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👥 단원 관리</h1>
+        </header>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-item">홈</a>
+            <a href="members.html" class="nav-item active">단원 관리</a>
+            <a href="schedule.html" class="nav-item">연습일 관리</a>
+            <a href="attendance.html" class="nav-item">출석 체크</a>
+        </nav>
+
+        <main>
+            <div class="page-header">
+                <button class="btn btn-primary" id="addMemberBtn">+ 단원 추가</button>
+            </div>
+
+            <div class="filter-section">
+                <label for="partFilter">파트별 필터:</label>
+                <select id="partFilter">
+                    <option value="">전체</option>
+                    <option value="1파트">1파트</option>
+                    <option value="2파트">2파트</option>
+                    <option value="3파트">3파트</option>
+                    <option value="4파트">4파트</option>
+                    <option value="5파트">5파트</option>
+                    <option value="6파트">6파트</option>
+                    <option value="콘트라베이스파트">콘트라베이스파트</option>
+                </select>
+            </div>
+
+            <div class="members-list" id="membersList">
+                <!-- 단원 목록이 여기에 동적으로 로드됩니다 -->
+            </div>
+        </main>
+
+        <!-- 단원 추가/수정 모달 -->
+        <div id="memberModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">단원 추가</h2>
+                <form id="memberForm">
+                    <input type="hidden" id="memberId">
+                    
+                    <div class="form-group">
+                        <label for="memberName">이름 *</label>
+                        <input type="text" id="memberName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memberNickname">닉네임</label>
+                        <input type="text" id="memberNickname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memberPart">파트 *</label>
+                        <select id="memberPart" required>
+                            <option value="">선택하세요</option>
+                            <option value="1파트">1파트</option>
+                            <option value="2파트">2파트</option>
+                            <option value="3파트">3파트</option>
+                            <option value="4파트">4파트</option>
+                            <option value="5파트">5파트</option>
+                            <option value="6파트">6파트</option>
+                            <option value="콘트라베이스파트">콘트라베이스파트</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memberRole">역할</label>
+                        <select id="memberRole">
+                            <option value="">없음</option>
+                            <option value="단장">단장</option>
+                            <option value="부단장">부단장</option>
+                            <option value="총무">총무</option>
+                            <option value="음악감독">음악감독</option>
+                            <option value="파트장">파트장</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">저장</button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="members.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연습일 관리 - Reina</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 연습일 관리</h1>
+        </header>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-item">홈</a>
+            <a href="members.html" class="nav-item">단원 관리</a>
+            <a href="schedule.html" class="nav-item active">연습일 관리</a>
+            <a href="attendance.html" class="nav-item">출석 체크</a>
+        </nav>
+
+        <main>
+            <div class="page-header">
+                <button class="btn btn-primary" id="generateScheduleBtn">연습일 자동 생성</button>
+                <button class="btn btn-secondary" id="addScheduleBtn">+ 연습일 추가</button>
+            </div>
+
+            <div class="info-box">
+                <p>💡 연습일 자동 생성: 2025년 11월 22일(토)부터 2026년 12월 31일까지 매주 토요일을 자동으로 생성합니다.</p>
+            </div>
+
+            <div class="schedule-list" id="scheduleList">
+                <!-- 연습일 목록이 여기에 동적으로 로드됩니다 -->
+            </div>
+        </main>
+
+        <!-- 연습일 추가/수정 모달 -->
+        <div id="scheduleModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">연습일 추가</h2>
+                <form id="scheduleForm">
+                    <input type="hidden" id="scheduleId">
+                    
+                    <div class="form-group">
+                        <label for="practiceDate">연습일 *</label>
+                        <input type="date" id="practiceDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isActive">
+                            <input type="checkbox" id="isActive" checked>
+                            활성화
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scheduleMemo">메모</label>
+                        <textarea id="scheduleMemo" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">저장</button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="schedule.js"></script>
+</body>
+</html>
