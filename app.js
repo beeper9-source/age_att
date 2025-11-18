@@ -28,3 +28,4 @@ export function getSupabase() {
 if (typeof window !== 'undefined') {
     initSupabase();
 }
+
