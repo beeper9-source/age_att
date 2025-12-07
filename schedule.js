@@ -1,4 +1,4 @@
-import { getSupabase } from './app.js';
+import { getSupabase, getSupabaseAsync } from './app.js';
 
 let schedules = [];
 
@@ -36,7 +36,7 @@ async function generateSchedules() {
         return;
     }
 
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     const startDate = new Date('2025-11-22');
@@ -105,7 +105,7 @@ function closeModal() {
 
 // 연습일 저장
 async function saveSchedule() {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     const id = document.getElementById('scheduleId').value;
@@ -149,7 +149,7 @@ async function saveSchedule() {
 async function deleteSchedule(id) {
     if (!confirm('정말 이 연습일을 삭제하시겠습니까?')) return;
 
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
@@ -169,7 +169,7 @@ async function deleteSchedule(id) {
 
 // 활성화 상태 토글
 async function toggleScheduleActive(id, currentStatus) {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
@@ -189,7 +189,7 @@ async function toggleScheduleActive(id, currentStatus) {
 
 // 연습일 목록 로드
 async function loadSchedules() {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {

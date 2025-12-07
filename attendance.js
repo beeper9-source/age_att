@@ -1,4 +1,4 @@
-import { getSupabase } from './app.js';
+import { getSupabase, getSupabaseAsync } from './app.js';
 
 let members = [];
 let schedules = [];
@@ -28,7 +28,7 @@ partFilterAttendance?.addEventListener('change', () => {
 
 // 연습일 목록 로드
 async function loadSchedules() {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
@@ -67,7 +67,7 @@ function displayScheduleOptions() {
 
 // 단원 목록 로드
 async function loadMembers() {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
@@ -89,7 +89,7 @@ async function loadMembers() {
 async function loadAttendance() {
     if (!currentScheduleId) return;
 
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
@@ -144,7 +144,7 @@ function addToGoogleCalendar(scheduleDate, memberName) {
 async function updateAttendance(memberId, status) {
     if (!currentScheduleId) return;
 
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {

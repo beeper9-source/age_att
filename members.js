@@ -1,4 +1,4 @@
-import { getSupabase } from './app.js';
+import { getSupabase, getSupabaseAsync } from './app.js';
 
 let members = [];
 let currentEditId = null;
@@ -61,7 +61,7 @@ function closeModal() {
 
 // 단원 저장
 async function saveMember() {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     const id = document.getElementById('memberId').value;
@@ -121,7 +121,7 @@ async function deleteMember(id) {
         return;
     }
 
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
@@ -141,7 +141,7 @@ async function deleteMember(id) {
 
 // 단원 목록 로드
 async function loadMembers() {
-    const supabase = getSupabase();
+    const supabase = await getSupabaseAsync();
     if (!supabase) return;
 
     try {
