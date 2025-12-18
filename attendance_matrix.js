@@ -35,7 +35,7 @@ async function loadMembers() {
 
 // 출석 매트릭스 로드
 async function loadAttendanceMatrix() {
-    const selectedYear = yearSelect?.value || new Date().getFullYear() - 1;
+    const selectedYear = yearSelect?.value || new Date().getFullYear();
     const yearStart = `${selectedYear}-01-01`;
     const yearEnd = `${selectedYear}-12-31`;
 
@@ -221,11 +221,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         await initSupabase();
         await loadMembers();
         
-        // 기본값을 전년도로 설정
+        // 기본값을 당해년도로 설정
         const currentYear = new Date().getFullYear();
-        const lastYear = currentYear - 1;
         if (yearSelect) {
-            yearSelect.value = lastYear.toString();
+            yearSelect.value = currentYear.toString();
         }
         
         await loadAttendanceMatrix();
