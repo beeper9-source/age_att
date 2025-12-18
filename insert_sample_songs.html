@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연습곡 샘플 데이터 삽입 - Reina</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        .song-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .song-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .song-item:last-child {
+            border-bottom: none;
+        }
+        .song-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        .song-details {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .success {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: none;
+        }
+        .error {
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 연습곡 샘플 데이터 삽입</h1>
+        </header>
+
+        <div class="info-box">
+            <h3>안내</h3>
+            <p>아래 버튼을 클릭하면 연습곡 샘플 데이터 10건이 자동으로 추가됩니다.</p>
+            <p>이미 등록된 곡은 자동으로 건너뜁니다.</p>
+        </div>
+
+        <div class="song-list">
+            <h3>추가될 샘플 곡 목록:</h3>
+            <div class="song-item">
+                <div class="song-title">1. 카르멘 서곡</div>
+                <div class="song-details">작곡가: 비제 | 편곡가: 클래식기타 편곡</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">2. 아라베스크 1번</div>
+                <div class="song-details">작곡가: 드뷔시</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">3. 캐논</div>
+                <div class="song-details">작곡가: 파헬벨 | 편곡가: 클래식기타 편곡</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">4. 사계 중 봄</div>
+                <div class="song-details">작곡가: 비발디 | 편곡가: 클래식기타 편곡</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">5. 아다지오</div>
+                <div class="song-details">작곡가: 알비노니</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">6. 미뉴엣</div>
+                <div class="song-details">작곡가: 바흐 | 편곡가: 클래식기타 편곡</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">7. 녹턴</div>
+                <div class="song-details">작곡가: 쇼팽 | 편곡가: 클래식기타 편곡</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">8. 세레나데</div>
+                <div class="song-details">작곡가: 슈베르트</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">9. 피가로의 결혼 서곡</div>
+                <div class="song-details">작곡가: 모차르트 | 편곡가: 클래식기타 편곡</div>
+            </div>
+            <div class="song-item">
+                <div class="song-title">10. 사랑의 인사</div>
+                <div class="song-details">작곡가: 엘가</div>
+            </div>
+        </div>
+
+        <button id="insertBtn" onclick="insertSampleSongs()">📝 샘플 곡 추가하기</button>
+        
+        <div id="successMessage" class="success"></div>
+        <div id="errorMessage" class="error"></div>
+    </div>
+
+    <script type="module">
+        import { insertSampleSongs } from './insert_sample_songs.js';
+        
+        // 전역 함수로 등록
+        window.insertSampleSongs = async () => {
+            const btn = document.getElementById('insertBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            btn.disabled = true;
+            btn.textContent = '추가 중...';
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            try {
+                await insertSampleSongs();
+                successMsg.textContent = '✅ 샘플 곡이 성공적으로 추가되었습니다!';
+                successMsg.style.display = 'block';
+                
+                // 3초 후 연습곡 관리 페이지로 이동
+                setTimeout(() => {
+                    window.location.href = 'songs.html';
+                }, 2000);
+            } catch (error) {
+                errorMsg.textContent = '❌ 오류: ' + error.message;
+                errorMsg.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = '📝 샘플 곡 추가하기';
+            }
+        };
+    </script>
+</body>
+</html>
+

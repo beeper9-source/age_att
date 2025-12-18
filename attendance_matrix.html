@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출석 매트릭스 - Reina</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .matrix-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        .year-selector {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .year-selector label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .year-selector select {
+            padding: 8px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 800px;
+        }
+        .matrix-table th,
+        .matrix-table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 12px;
+        }
+        .matrix-table th {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .matrix-table th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 11;
+            background: #4CAF50;
+            min-width: 80px;
+        }
+        .matrix-table th:nth-child(2) {
+            position: sticky;
+            left: 80px;
+            z-index: 11;
+            background: #4CAF50;
+            min-width: 120px;
+        }
+        .matrix-table th:nth-child(3) {
+            position: sticky;
+            left: 200px;
+            z-index: 11;
+            background: #4CAF50;
+            min-width: 80px;
+        }
+        .matrix-table th:nth-child(4) {
+            position: sticky;
+            left: 280px;
+            z-index: 11;
+            background: #4CAF50;
+            min-width: 80px;
+        }
+        .matrix-table th:nth-child(5) {
+            position: sticky;
+            left: 360px;
+            z-index: 11;
+            background: #4CAF50;
+            min-width: 80px;
+        }
+        .matrix-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 9;
+            background: white;
+            min-width: 80px;
+        }
+        .matrix-table td:nth-child(2) {
+            position: sticky;
+            left: 80px;
+            z-index: 9;
+            background: white;
+            min-width: 120px;
+        }
+        .matrix-table td:nth-child(3) {
+            position: sticky;
+            left: 200px;
+            z-index: 9;
+            background: white;
+            min-width: 80px;
+        }
+        .matrix-table td:nth-child(4) {
+            position: sticky;
+            left: 280px;
+            z-index: 9;
+            background: white;
+            min-width: 80px;
+        }
+        .matrix-table td:nth-child(5) {
+            position: sticky;
+            left: 360px;
+            z-index: 9;
+            background: white;
+            min-width: 80px;
+        }
+        .matrix-table tr:hover td:first-child,
+        .matrix-table tr:hover td:nth-child(2),
+        .matrix-table tr:hover td:nth-child(3),
+        .matrix-table tr:hover td:nth-child(4),
+        .matrix-table tr:hover td:nth-child(5) {
+            background: #f5f5f5;
+        }
+        .matrix-table tr:hover {
+            background: #f5f5f5;
+        }
+        .matrix-table tr:hover td {
+            background: #f5f5f5;
+        }
+        .attendance-cell {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .cell-present {
+            background: #4CAF50;
+            color: white;
+        }
+        .cell-absent {
+            background: #F44336;
+            color: white;
+        }
+        .cell-unknown {
+            background: #FFC107;
+            color: #000;
+        }
+        .cell-none {
+            background: #e0e0e0;
+            color: #999;
+        }
+        .attendance-rate {
+            font-weight: bold;
+        }
+        .rate-excellent {
+            color: #4CAF50;
+        }
+        .rate-good {
+            color: #8BC34A;
+        }
+        .rate-fair {
+            color: #FFC107;
+        }
+        .rate-poor {
+            color: #F44336;
+        }
+        .part-header {
+            background: #e8f5e9 !important;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 출석 매트릭스</h1>
+        </header>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-item">홈</a>
+            <a href="members.html" class="nav-item">단원 관리</a>
+            <a href="schedule.html" class="nav-item">연습일 관리</a>
+            <a href="songs.html" class="nav-item">연습곡 관리</a>
+            <a href="attendance.html" class="nav-item">출석 체크</a>
+            <a href="attendance_stats.html" class="nav-item">출석 통계</a>
+            <a href="attendance_matrix.html" class="nav-item active">출석 매트릭스</a>
+        </nav>
+
+        <main>
+            <div class="year-selector">
+                <label for="yearSelect">조회 연도:</label>
+                <select id="yearSelect">
+                    <option value="2024">2024년</option>
+                    <option value="2025">2025년</option>
+                    <option value="2026">2026년</option>
+                </select>
+            </div>
+
+            <div class="matrix-container" id="matrixContainer">
+                <div class="loading">출석 매트릭스를 불러오는 중...</div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="attendance_matrix.js"></script>
+</body>
+</html>
+
