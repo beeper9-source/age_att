@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출석 통계 - Reina</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .stats-container {
+            margin-top: 20px;
+        }
+        .year-selector {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .year-selector label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .year-selector select {
+            padding: 8px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stats-table th,
+        .stats-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .stats-table th {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        .stats-table tr:hover {
+            background: #f5f5f5;
+        }
+        .attendance-rate {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .rate-excellent {
+            color: #4CAF50;
+        }
+        .rate-good {
+            color: #8BC34A;
+        }
+        .rate-fair {
+            color: #FFC107;
+        }
+        .rate-poor {
+            color: #F44336;
+        }
+        .progress-bar-container {
+            width: 200px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .progress-excellent {
+            background: #4CAF50;
+        }
+        .progress-good {
+            background: #8BC34A;
+        }
+        .progress-fair {
+            background: #FFC107;
+        }
+        .progress-poor {
+            background: #F44336;
+        }
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .summary-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 출석 통계</h1>
+        </header>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-item">홈</a>
+            <a href="members.html" class="nav-item">단원 관리</a>
+            <a href="schedule.html" class="nav-item">연습일 관리</a>
+            <a href="songs.html" class="nav-item">연습곡 관리</a>
+            <a href="attendance.html" class="nav-item">출석 체크</a>
+            <a href="attendance_stats.html" class="nav-item active">출석 통계</a>
+        </nav>
+
+        <main>
+            <div class="year-selector">
+                <label for="yearSelect">조회 연도:</label>
+                <select id="yearSelect">
+                    <option value="2024">2024년</option>
+                    <option value="2025">2025년</option>
+                    <option value="2026">2026년</option>
+                </select>
+            </div>
+
+            <div class="stats-summary" id="statsSummary">
+                <!-- 통계 요약이 여기에 표시됩니다 -->
+            </div>
+
+            <div class="stats-container">
+                <table class="stats-table" id="statsTable">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>이름</th>
+                            <th>파트</th>
+                            <th>출석 횟수</th>
+                            <th>불참 횟수</th>
+                            <th>미정 횟수</th>
+                            <th>전체 연습일</th>
+                            <th>출석율</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statsTableBody">
+                        <!-- 통계 데이터가 여기에 표시됩니다 -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="attendance_stats.js"></script>
+</body>
+</html>
+

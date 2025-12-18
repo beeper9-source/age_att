@@ -16,7 +16,9 @@
             <a href="index.html" class="nav-item">홈</a>
             <a href="members.html" class="nav-item">단원 관리</a>
             <a href="schedule.html" class="nav-item active">연습일 관리</a>
+            <a href="songs.html" class="nav-item">연습곡 관리</a>
             <a href="attendance.html" class="nav-item">출석 체크</a>
+            <a href="attendance_stats.html" class="nav-item">출석 통계</a>
         </nav>
 
         <main>
@@ -52,6 +54,14 @@
                     <div class="form-group">
                         <label for="scheduleMemo">메모</label>
                         <textarea id="scheduleMemo" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scheduleSongs">연습곡 선택 (여러 개 선택 가능)</label>
+                        <select id="scheduleSongs" multiple style="min-height: 150px;">
+                            <option value="">연습곡을 선택하세요</option>
+                        </select>
+                        <small style="display: block; margin-top: 5px; color: #666;">Ctrl(또는 Cmd) 키를 누른 채로 여러 곡을 선택할 수 있습니다.</small>
                     </div>
 
                     <div class="form-actions">
