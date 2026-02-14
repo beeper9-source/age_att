@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- 처음 접속 시 로고 스플래시 (약 3초) -->
+    <div id="splashScreen" class="splash-screen">
+        <img src="logo.JPG" alt="ALHAMBRA Guitar Ensemble" class="splash-logo">
+    </div>
+
     <div class="container">
         <header>
             <h1>🎸 Reina</h1>
@@ -64,6 +69,19 @@
     </div>
 
     <script type="module" src="app.js"></script>
+    <script>
+        (function() {
+            var splash = document.getElementById('splashScreen');
+            if (splash) {
+                setTimeout(function() {
+                    splash.classList.add('splash-hidden');
+                    setTimeout(function() {
+                        splash.style.display = 'none';
+                    }, 400);
+                }, 3000);
+            }
+        })();
+    </script>
 </body>
 </html>
 

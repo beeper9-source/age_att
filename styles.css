@@ -4,6 +4,34 @@
     box-sizing: border-box;
 }
 
+/* 스플래시 화면 - 처음 접속 시 로고 3초 표시 */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.4s ease-out;
+}
+
+.splash-screen.splash-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.splash-logo {
+    max-width: 90%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
