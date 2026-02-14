@@ -516,6 +516,36 @@ input:checked + .toggle-slider:before {
     font-size: 1.1em;
 }
 
+/* 연습곡 목록 - 곡과 곡 사이 색상 구분 */
+.songs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.song-card {
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid transparent;
+    transition: box-shadow 0.2s;
+}
+
+.song-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 홀수 번째 곡 - 연한 보라 톤 */
+.song-card:nth-child(odd) {
+    background-color: #f5f0ff;
+    border-left-color: #667eea;
+}
+
+/* 짝수 번째 곡 - 연한 청록 톤 */
+.song-card:nth-child(even) {
+    background-color: #e8f4f8;
+    border-left-color: #17a2b8;
+}
+
 /* 모달 */
 .modal {
     display: none;
