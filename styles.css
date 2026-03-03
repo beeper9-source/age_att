@@ -537,6 +537,99 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
+/* 출석 체크(멀티) */
+.multi-schedule-section {
+    margin-top: 20px;
+}
+
+.multi-bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.multi-bulk-actions .bulk-label {
+    font-weight: 600;
+    color: #495057;
+    margin-right: 8px;
+}
+
+.multi-bulk-actions .btn-bulk[data-status="출석"] { background: #28a745; color: white; }
+.multi-bulk-actions .btn-bulk[data-status="불참"] { background: #dc3545; color: white; }
+.multi-bulk-actions .btn-bulk[data-status="미정"] { background: #ffc107; color: white; }
+
+.schedules-multi-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.schedule-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    background: #fff;
+}
+
+.schedule-row.present { border-color: #28a745; background: #d4edda; }
+.schedule-row.absent  { border-color: #dc3545; background: #f8d7da; }
+.schedule-row.unknown { border-color: #ffc107; background: #fff3cd; }
+
+.schedule-row-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    min-width: 200px;
+}
+
+.schedule-row-check .schedule-row-cb {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.schedule-date {
+    font-weight: 500;
+    color: #333;
+}
+
+.schedule-status-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 600;
+    min-width: 48px;
+    text-align: center;
+}
+
+.schedule-status-badge.status-present { background: #28a745; color: white; }
+.schedule-status-badge.status-absent  { background: #dc3545; color: white; }
+.schedule-status-badge.status-unknown { background: #ffc107; color: #333; }
+
+.schedule-row-actions {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.schedule-row-actions .btn-small {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.schedule-row-actions button[data-status="출석"] { background: #28a745; color: white; border: none; }
+.schedule-row-actions button[data-status="불참"] { background: #dc3545; color: white; border: none; }
+.schedule-row-actions button[data-status="미정"] { background: #ffc107; color: #333; border: none; }
+
 .empty-message {
     text-align: center;
     padding: 40px;

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출석 체크(멀티) - Reina</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✅ 출석 체크(멀티)</h1>
+            <p class="subtitle">단원을 선택한 후 여러 연습일을 멀티로 선택해 출석을 체크합니다.</p>
+        </header>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-item">홈</a>
+            <a href="members.html" class="nav-item">단원 관리</a>
+            <a href="schedule.html" class="nav-item">연습일 관리</a>
+            <a href="songs.html" class="nav-item">연습곡 관리</a>
+            <a href="attendance.html" class="nav-item">출석 체크</a>
+            <a href="attendance_multi.html" class="nav-item active">출석체크(멀티)</a>
+            <a href="attendance_stats.html" class="nav-item">출석 통계</a>
+            <a href="attendance_matrix.html" class="nav-item">출석 매트릭스</a>
+        </nav>
+
+        <main>
+            <div class="attendance-controls">
+                <div class="form-group">
+                    <label for="memberSelect">단원 선택 *</label>
+                    <select id="memberSelect">
+                        <option value="">단원을 선택하세요</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="schedulesSection" class="multi-schedule-section" style="display: none;">
+                <div class="multi-bulk-actions">
+                    <span class="bulk-label">선택한 연습일 일괄 설정:</span>
+                    <button type="button" class="btn btn-small btn-bulk" data-status="출석">출석</button>
+                    <button type="button" class="btn btn-small btn-bulk" data-status="불참">불참</button>
+                    <button type="button" class="btn btn-small btn-bulk" data-status="미정">미정</button>
+                </div>
+                <div class="legend" style="margin-bottom: 12px;">
+                    <span class="legend-item"><span class="status-indicator status-present"></span> 출석</span>
+                    <span class="legend-item"><span class="status-indicator status-absent"></span> 불참</span>
+                    <span class="legend-item"><span class="status-indicator status-unknown"></span> 미정</span>
+                </div>
+                <div id="schedulesList" class="schedules-multi-list">
+                    <!-- 연습일 목록 (체크박스 + 상태 + 버튼) -->
+                </div>
+            </div>
+
+            <div id="emptyMessage" class="empty-message">
+                단원을 선택하면 해당 단원의 연습일 목록이 표시됩니다.
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="attendance_multi.js"></script>
+</body>
+</html>
