@@ -229,19 +229,11 @@ function displayAttendance() {
 
                         return `
                             <div class="member-attendance-item ${statusClass}">
-                                <div class="member-name">${member.name}${member.nickname ? ` (${member.nickname})` : ''}</div>
-                                <div class="status-buttons">
-                                    <button class="status-btn active" style="background: ${statusColor};" 
-                                            onclick="window.updateAttendance('${member.id}', '${status}')" 
-                                            title="${status}"></button>
-                                </div>
-                                <div style="margin-top: 10px;">
-                                    <button class="btn btn-small" style="background: #28a745; color: white; margin: 2px;" 
-                                            onclick="window.setAttendance('${member.id}', '출석')">출석</button>
-                                    <button class="btn btn-small" style="background: #dc3545; color: white; margin: 2px;" 
-                                            onclick="window.setAttendance('${member.id}', '불참')">불참</button>
-                                    <button class="btn btn-small" style="background: #ffc107; color: white; margin: 2px;" 
-                                            onclick="window.setAttendance('${member.id}', '미정')">미정</button>
+                                <span class="member-name">${member.name}${member.nickname ? ` (${member.nickname})` : ''}</span>
+                                <div class="member-attendance-btns">
+                                    <button type="button" class="btn btn-tiny" style="background:#28a745;color:white;" onclick="window.setAttendance('${member.id}', '출석')">출석</button>
+                                    <button type="button" class="btn btn-tiny" style="background:#dc3545;color:white;" onclick="window.setAttendance('${member.id}', '불참')">불참</button>
+                                    <button type="button" class="btn btn-tiny" style="background:#ffc107;color:#333;" onclick="window.setAttendance('${member.id}', '미정')">미정</button>
                                 </div>
                             </div>
                         `;

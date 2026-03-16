@@ -23,42 +23,33 @@
             <a href="attendance_matrix.html" class="nav-item">출석 매트릭스</a>
         </nav>
 
-        <main>
-            <div class="attendance-controls">
-                <div class="form-group">
-                    <label for="scheduleSelect">연습일 선택 *</label>
-                    <select id="scheduleSelect" required>
-                        <option value="">연습일을 선택하세요</option>
-                    </select>
+        <main class="attendance-main">
+            <div class="attendance-top-row">
+                <div class="attendance-controls">
+                    <div class="form-group form-group-inline">
+                        <label for="scheduleSelect">연습일</label>
+                        <select id="scheduleSelect" required>
+                            <option value="">연습일을 선택하세요</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label for="partFilterAttendance">파트</label>
+                        <select id="partFilterAttendance">
+                            <option value="">전체</option>
+                            <option value="1파트">1파트</option>
+                            <option value="2파트">2파트</option>
+                            <option value="3파트">3파트</option>
+                            <option value="4파트">4파트</option>
+                            <option value="5파트">5파트</option>
+                            <option value="6파트">6파트</option>
+                            <option value="콘트라베이스파트">콘트라베이스파트</option>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="partFilterAttendance">파트별 필터:</label>
-                    <select id="partFilterAttendance">
-                        <option value="">전체</option>
-                        <option value="1파트">1파트</option>
-                        <option value="2파트">2파트</option>
-                        <option value="3파트">3파트</option>
-                        <option value="4파트">4파트</option>
-                        <option value="5파트">5파트</option>
-                        <option value="6파트">6파트</option>
-                        <option value="콘트라베이스파트">콘트라베이스파트</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="legend">
-                <div class="legend-item">
-                    <span class="status-indicator status-present"></span>
-                    <span>출석</span>
-                </div>
-                <div class="legend-item">
-                    <span class="status-indicator status-absent"></span>
-                    <span>불참</span>
-                </div>
-                <div class="legend-item">
-                    <span class="status-indicator status-unknown"></span>
-                    <span>미정</span>
+                <div class="legend legend-compact">
+                    <span class="legend-item"><span class="status-indicator status-present"></span>출석</span>
+                    <span class="legend-item"><span class="status-indicator status-absent"></span>불참</span>
+                    <span class="legend-item"><span class="status-indicator status-unknown"></span>미정</span>
                 </div>
             </div>
 
