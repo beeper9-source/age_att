@@ -42,7 +42,6 @@ async function loadSchedules() {
 
         schedules = data || [];
         displayScheduleOptions();
-        setDefaultScheduleAndLoad();
     } catch (error) {
         console.error('연습일 목록 로드 오류:', error);
     }
@@ -251,8 +250,9 @@ window.setAttendance = async (memberId, status) => {
     await updateAttendance(memberId, status);
 };
 
-// 페이지 로드 시 초기화
+// 페이지 로드 시 초기화 (단원 로드 후에 기본 연습일 설정 → 출석 조회)
 document.addEventListener('DOMContentLoaded', async () => {
     await loadSchedules();
     await loadMembers();
+    setDefaultScheduleAndLoad();
 });
