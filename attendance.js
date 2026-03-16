@@ -42,8 +42,49 @@ async function loadSchedules() {
 
         schedules = data || [];
         displayScheduleOptions();
+        setDefaultScheduleAndLoad();
     } catch (error) {
         console.error('연습일 목록 로드 오류:', error);
+    }
+}
+
+// 오늘 날짜 문자열 (YYYY-MM-DD, 로컬 기준)
+function getTodayDateString() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+}
+
+// 연습일 날짜만 비교용 (practice_date가 'YYYY-MM-DD' 또는 ISO 문자열일 수 있음)
+function getScheduleDateString(schedule) {
+    const s = schedule.practice_date;
+    if (!s) return '';
+    return String(s).slice(0, 10);
+}
+
+// 디폴트 연습일: 오늘과 같은 날이 있으면 그날, 없으면 오늘 기준 다가오는 연습일
+function setDefaultScheduleAndLoad() {
+    if (!scheduleSelect || !schedules.length) return;
+
+    const today = getTodayDateString();
+
+    // 1) 오늘과 같은 연습일이 있으면 그날을 디폴트
+    let defaultSchedule = schedules.find(s => getScheduleDateString(s) === today);
+    if (defaultSchedule) {
+        scheduleSelect.value = defaultSchedule.id;
+        currentScheduleId = defaultSchedule.id;
+        loadAttendance();
+        return;
+    }
+
+    // 2) 오늘 이후 다가오는 연습일 중 첫 번째를 디폴트
+    defaultSchedule = schedules.find(s => getScheduleDateString(s) >= today);
+    if (defaultSchedule) {
+        scheduleSelect.value = defaultSchedule.id;
+        currentScheduleId = defaultSchedule.id;
+        loadAttendance();
     }
 }
 
