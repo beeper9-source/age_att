@@ -212,7 +212,34 @@ function displayAttendance() {
     // 파트 순서 정의
     const partOrder = ['1파트', '2파트', '3파트', '4파트', '5파트', '6파트', '콘트라베이스파트'];
 
-    let html = '';
+    function getMemberStatus(memberId) {
+        const attendance = attendanceRecords.find(r => r.member_id === memberId);
+        return attendance ? attendance.status : '미정';
+    }
+
+    // 파트별 출석 인원·총 출석 (현재 필터·연습일 기준)
+    let totalPresent = 0;
+    const partPresentParts = [];
+    partOrder.forEach(part => {
+        if (!membersByPart[part]) return;
+        const cnt = membersByPart[part].filter(m => getMemberStatus(m.id) === '출석').length;
+        partPresentParts.push({ part, count: cnt });
+        totalPresent += cnt;
+    });
+
+    let summaryHtml = `
+        <div class="attendance-summary">
+            <span class="attendance-summary-label">이번 연습일 출석</span>
+            <div class="attendance-summary-parts">
+                ${partPresentParts.map(({ part, count }) =>
+                    `<span class="attendance-summary-chip">${part} <strong>${count}명</strong></span>`
+                ).join('')}
+            </div>
+            <span class="attendance-summary-total">총 <strong>${totalPresent}명</strong></span>
+        </div>
+    `;
+
+    let html = summaryHtml;
     partOrder.forEach(part => {
         if (!membersByPart[part]) return;
 
@@ -221,10 +248,8 @@ function displayAttendance() {
                 <div class="part-title">${part}</div>
                 <div class="members-attendance">
                     ${membersByPart[part].map(member => {
-                        const attendance = attendanceRecords.find(r => r.member_id === member.id);
-                        const status = attendance ? attendance.status : '미정';
+                        const status = getMemberStatus(member.id);
                         const statusClass = status === '출석' ? 'present' : status === '불참' ? 'absent' : 'unknown';
-                        const statusColor = status === '출석' ? '#28a745' : status === '불참' ? '#dc3545' : '#ffc107';
 
                         return `
                             <div class="member-attendance-item ${statusClass}">

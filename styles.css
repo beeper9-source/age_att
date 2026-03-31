@@ -388,6 +388,60 @@ input:checked + .toggle-slider:before {
     padding: 16px 20px;
 }
 
+/* 출석 요약: 파트별 출석 인원 + 총 출석 */
+.attendance-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+    border: 1px solid #c8e6c9;
+    border-radius: 8px;
+    font-size: 0.9em;
+}
+
+.attendance-summary-label {
+    font-weight: 700;
+    color: #2e7d32;
+    margin-right: 4px;
+}
+
+.attendance-summary-parts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.attendance-summary-chip {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #b2dfdb;
+    color: #37474f;
+}
+
+.attendance-summary-chip strong {
+    color: #1565c0;
+}
+
+.attendance-summary-total {
+    font-weight: 600;
+    color: #1b5e20;
+    white-space: nowrap;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 6px;
+    border: 2px solid #43a047;
+}
+
+.attendance-summary-total strong {
+    font-size: 1.1em;
+}
+
 .attendance-top-row {
     display: flex;
     flex-wrap: wrap;
