@@ -41,6 +41,7 @@ function openModal(member = null) {
         document.getElementById('memberId').value = member.id;
         document.getElementById('memberName').value = member.name;
         document.getElementById('memberNickname').value = member.nickname || '';
+        document.getElementById('memberEmail').value = member.email || '';
         document.getElementById('memberPart').value = member.part;
         document.getElementById('memberRole').value = member.role || '';
     } else {
@@ -67,12 +68,14 @@ async function saveMember() {
     const id = document.getElementById('memberId').value;
     const name = document.getElementById('memberName').value;
     const nickname = document.getElementById('memberNickname').value;
+    const email = document.getElementById('memberEmail').value;
     const part = document.getElementById('memberPart').value;
     const role = document.getElementById('memberRole').value;
 
     const memberData = {
         name,
         nickname: nickname || null,
+        email: email || null,
         part,
         role: role || null
     };
@@ -179,6 +182,7 @@ function displayMembers() {
             <div class="member-info">
                 <p><strong>파트:</strong> <span class="badge badge-part">${member.part}</span></p>
                 ${member.role ? `<p><strong>역할:</strong> <span class="badge badge-role">${member.role}</span></p>` : ''}
+                ${member.email ? `<p><strong>이메일:</strong> <span>${member.email}</span></p>` : ''}
             </div>
             <div class="member-actions">
                 <button class="btn btn-primary btn-small" onclick="window.editMember('${member.id}')">수정</button>
