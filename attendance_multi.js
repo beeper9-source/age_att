@@ -59,7 +59,8 @@ async function loadMembers() {
             .order('name', { ascending: true });
 
         if (error) throw error;
-        members = data || [];
+        // 이름에 '휴식'이 포함된 단원은 제외 (단원관리 외 모든 화면에서 숨김)
+        members = (data || []).filter(member => !member.name || !member.name.includes('휴식'));
         renderMemberOptions();
     } catch (error) {
         console.error('단원 목록 로드 오류:', error);
