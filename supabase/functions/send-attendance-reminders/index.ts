@@ -2,6 +2,17 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { SMTPClient } from "https://deno.land/x/denomailer/mod.ts"
 
+// UTF-8 문자열을 SMTP 헤더(MIME Encoded-Word) 형식으로 인코딩하는 헬퍼 함수 (한글 깨짐 방지)
+// DenoMailer의 자동 인코딩 우회를 위해 문자열 시작 부분에 공백을 추가합니다.
+function encodeHeader(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return ` =?UTF-8?B?${btoa(binary)}?=`;
+}
+
 serve(async (req) => {
   // CORS 프리플라이트 요청 처리
   if (req.method === "OPTIONS") {
@@ -24,7 +35,7 @@ serve(async (req) => {
     const smtpUsername = Deno.env.get("SMTP_USERNAME") || "beeper9@gmail.com";
     const smtpPassword = Deno.env.get("SMTP_PASSWORD"); // App Password
     const senderEmail = Deno.env.get("SENDER_EMAIL") || "beeper9@gmail.com";
-    const appUrl = Deno.env.get("APP_URL") || "http://localhost:8000";
+    const appUrl = Deno.env.get("APP_URL") || "https://beeper9-source.github.io/age_att/index.html";
 
     if (!supabaseUrl || !supabaseServiceKey) {
       throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required in environment variables.");
@@ -168,8 +179,14 @@ serve(async (req) => {
           cc.push(partLeader.email);
         }
 
-        const emailBody = `
-          <div style="font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; color: #333333;">
+        const emailBody = `<!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        </head>
+        <body style="margin: 0; padding: 0;">
+          <div style="font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; line-height: 1.6; max-width: 600px; margin: 20px auto; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; color: #333333;">
             <h2 style="color: #2b579a; border-bottom: 2px solid #2b579a; padding-bottom: 12px; margin-top: 0;">🎸 Reina 출석 체크 요청</h2>
             <p>안녕하세요, <strong>${m.name}</strong>님 (${m.nickname ? `닉네임: ${m.nickname}, ` : ''}${m.part || ''}).</p>
             <p>돌아오는 <strong>${targetSaturday.toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric", weekday: "short" })} 연습 일정</strong>의 출석 체크가 완료되지 않아 안내해 드립니다.</p>
@@ -183,7 +200,7 @@ serve(async (req) => {
             <p>원활한 합주 준비 및 인원 점검을 위해 오늘 중으로 출석 여부를 결정해 주시기 바랍니다.</p>
             
             <div style="margin: 30px 0; text-align: center;">
-              <a href="${appUrl}/attendance.html" target="_blank" style="background-color: #2b579a; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">출석 체크 화면으로 가기</a>
+              <a href="${appUrl}" target="_blank" style="background-color: #2b579a; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">출석 체크 화면으로 가기</a>
             </div>
             
             <p style="font-size: 0.85em; color: #888888; border-top: 1px solid #eeeeee; padding-top: 15px; margin-top: 30px;">
@@ -191,13 +208,18 @@ serve(async (req) => {
               ※ 수신인: 본인(${m.name}) ${cc.length > 0 ? `, 파트장(${partLeader.name}) 참조` : ''}
             </p>
           </div>
+        </body>
+        </html>
         `;
+
+        const rawSubject = `[Reina] ${m.name}님, 이번 주 토요일 연습 출석 체크 요청`;
+        const encodedSubject = encodeHeader(rawSubject);
 
         await client.send({
           from: senderEmail,
           to: to,
           ...(cc.length > 0 ? { cc: cc } : {}),
-          subject: `[Reina] ${m.name}님, 이번 주 토요일 연습 출석 체크 요청`,
+          subject: encodedSubject,
           html: emailBody,
         });
 
