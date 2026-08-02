@@ -27,11 +27,8 @@ async function loadMembers() {
 
         if (error) throw error;
 
-        // 이름 또는 닉네임에 '휴식'이 포함된 단원은 제외 (단원관리 외 모든 화면에서 숨김)
-        members = (data || []).filter(member => 
-            (!member.name || !member.name.includes('휴식')) && 
-            (!member.nickname || !member.nickname.includes('휴식'))
-        );
+        // 역할(role)이 '휴식'인 단원은 제외 (단원관리 외 모든 화면에서 숨김)
+        members = (data || []).filter(member => member.role !== '휴식');
     } catch (error) {
         console.error('단원 목록 로드 오류:', error);
     }

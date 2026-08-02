@@ -4,7 +4,7 @@
 -- 기존 constraint 삭제 (이름이 다를 수 있으므로 확인 필요)
 ALTER TABLE age_members DROP CONSTRAINT IF EXISTS age_members_role_check;
 
--- 새로운 constraint 추가 (악장, 부악장 포함)
+-- 새로운 constraint 추가 (악장, 부악장, 휴식 포함)
 ALTER TABLE age_members 
 ADD CONSTRAINT age_members_role_check 
 CHECK (role IS NULL OR role IN (
@@ -14,6 +14,7 @@ CHECK (role IS NULL OR role IN (
     '부악장',
     '총무',
     '음악감독',
-    '파트장'
+    '파트장',
+    '휴식'
 ));
 
